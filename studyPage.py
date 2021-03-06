@@ -14,7 +14,8 @@ class StudyPage(BasePage):
     leftMenu_result_loc = (By.CSS_SELECTOR, '#left_menu_ul>li:nth-child(4)')
     topMenu_study_loc = (By.CSS_SELECTOR, '#menu_tag_ul>li:nth-child(2)')
     link_kecheng_loc = (By.CSS_SELECTOR, '#frame_learning_content_1 #tr_tblDataList_0 a')
-    chapter_nums_loc = (By.CSS_SELECTOR, '#_JS_TREE_0_0_SubTree>td:nth-child(3)>table>tbody>tr')
+    chapter_nums_loct = (By.CSS_SELECTOR, '#_JS_TREE_0_0_SubTree>td:nth-child(3)>table>tbody>tr')
+    chapter_nums_loc = (By.CSS_SELECTOR, '#_JS_TREE_0_0_SubTree>td:last-child>table>tbody>[parenttree="_JS_TREE_0"]')
 
     iframe_loc = (By.NAME, 'w_main')
     f_left_loc = (By.ID, 'w_code')
@@ -84,12 +85,13 @@ class StudyPage(BasePage):
 
     def get_chapter_nums(self) -> int:
         chapter_nums = 1
-        page_source = self.driver.page_source
-        if self.find_element(*self.chapter_nums_loc):
+        # page_source = self.driver.page_source
+        if self.find_elements(*self.chapter_nums_loc):
             chapter_nums = len(self.find_elements(*self.chapter_nums_loc))
-            for i in range(0, chapter_nums):
-                if '_JS_TREE_0_0_{0}_SubTree'.format(i) in page_source:
-                    chapter_nums -= 1
+            print(chapter_nums)
+            # for i in range(0, chapter_nums):
+            #     if '_JS_TREE_0_0_{0}_SubTree'.format(i) in page_source:
+            #         chapter_nums -= 1
         return chapter_nums
 
     def click_chapter(self, num):  #点击章
